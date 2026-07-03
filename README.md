@@ -1,2 +1,2 @@
 # skills
-a Collection of LLM Agent Skills to Use with graphomate Products
+A collection of LLM Agent Skills to use with graphomate products.
