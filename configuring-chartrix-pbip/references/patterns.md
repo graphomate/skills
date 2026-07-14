@@ -88,9 +88,9 @@ this.bars.forEach(bar => {
   if (!dp) return;
 
   if (dp.value > 0) {
-    bar.styles = `fill: #8cb400;`; // IbcsColors.GREEN
+    bar.styles = css`fill: ${IbcsColors.GREEN};`;
   } else {
-    bar.styles = `fill: #ff0000;`; // IbcsColors.RED
+    bar.styles = css`fill: ${IbcsColors.RED};`;
   }
 });
 ```
@@ -111,7 +111,7 @@ this.bars.forEach(bar => {
   if (r === undefined || c === undefined) return;
 
   if (extremas[r]?.[c]?.isLocalMax) {
-    bar.styles = `fill: #0070c0;`; // IbcsColors.BLUE
+    bar.styles = css`fill: ${IbcsColors.BLUE};`;
   }
 });
 ```
@@ -141,7 +141,7 @@ this.bars.forEach(bar => {
 if (maxBar) {
   // Create label relative to the max bar
   const label = this.createLabel("▲ Max", 0, -15, maxBar);
-  label.color = "#0070c0"; // IbcsColors.BLUE
+  label.color = IbcsColors.BLUE;
 }
 ```
 
@@ -155,7 +155,7 @@ Color only the "Budget" bars differently:
 const isBudget = this.createFilterByAddress({ "Datenquelle.Version": ["Budget"] });
 
 this.bars.filter(isBudget).forEach(bar => {
-  bar.styles = `fill: transparent; stroke: #404040; stroke-width: 2px;`; // IbcsColors.DARK_GREY
+  bar.styles = css`fill: transparent; stroke: ${IbcsColors.DARK_GREY}; stroke-width: 2px;`;
 });
 ```
 
@@ -171,7 +171,7 @@ this.bars.forEach(bar => {
   if (bar.semanticType !== "DATA_BAR") return;
   const value = bar.dataPoint?.cellRepresentingDataPoint?.value;
   if (value !== undefined && value > threshold) {
-    bar.addStyles(`fill: #0070c0;`); // IbcsColors.BLUE
+    bar.addStyles(css`fill: ${IbcsColors.BLUE};`);
   }
 });
 ```
@@ -236,94 +236,34 @@ this.viewModel.forEach(viewItem => {
 
 ---
 
-## Pattern 9: Style DATA_MARK dots of a specific series (line chart)
+## Pattern 9 (open limitation): centering a highlight label — nothing tried works reliably
 
-`rowIndex` on `DATA_MARK` is the **category index** (e.g. week), not the series index —
-it restarts at 0 for every series. Series identification must go through `viewItem.key`
-(format `data:lineDot:catIndex{N}:serIndex:{S}`) or through `viewItem.address`.
+`HIGHLIGHT_LABEL` is documented as "positioned like HIGHLIGHT_DELTA_LINE" (`x/y.scaledValue.dataPoint`
++ `zeroReference`). In practice, none of the following reliably centered the label text on the
+delta line:
 
-**Which one to use depends on how the second series was created:**
-- **Series created via a dimension in the series feed** (e.g. a `Version` field with
-  members `Actual`/`Budget`): `address` contains that dimension and can be filtered on
-  directly, e.g. `address.Version === "Budget"`.
-- **Series created via two measures in the measure feed** (e.g. `Revenue` and `Cost`
-  both in Values): there is no extra dimension in `address` to filter on — the measure
-  name itself is the series discriminator, under the
-  `"graphomate.internal.measures"` address key.
+1. **Synthetic midpoint `DataPoint`** (`dataPoint = zeroReference = average of min/max`) — anchor
+   point looked plausible but the rendered text still sat offset toward one side.
+2. **Custom `createLabel()` anchored to the delta line**, offset by half the line's own
+   `getAbsoluteWidth()`/`getAbsoluteHeight()` — anchors on the line's midpoint correctly, but the
+   label's *own* text box still grows off to one side from that anchor (not centered on itself).
+3. **Reading the new label's own `getAbsoluteWidth()`/`getAbsoluteHeight()` right after
+   `createLabel()`, to compensate for its own box** — **crashes the whole visual**:
+   `Uncaught TypeError: Cannot read properties of undefined (reading 'getDataLength')` at
+   `Label.getAbsoluteWidth`. A freshly created element isn't mounted/measured yet within the same
+   script execution — don't call geometry getters on same-run-created elements.
+4. **CSS centering via `styles`** (`text-anchor: middle; dominant-baseline: middle`) — did not
+   visibly change the label position. Also confirmed here: the `css` tag function is **not**
+   globally available in this sandbox (`css is not defined`), contradicting the `api.md` styling
+   section — use the plain-object form instead: `label.styles = { name: "xfl", styles: "..." }`.
+   Even with that fix, the text-anchor styling had no visible centering effect on `HIGHLIGHT_LABEL`
+   text specifically — unclear whether `text-anchor`/`dominant-baseline` are respected on Label
+   elements at all in this renderer.
 
-The **`serIndex` from `key` works in both cases** and is the more robust, general-purpose
-way to target "the second series", regardless of how it was created:
-
-```javascript
-// Robust: works whether series came from a dimension or from two measures
-this.dataMarks.forEach(mark => {
-  if (mark.semanticType !== "DATA_MARK") return;
-  if (!mark.key || !mark.key.includes("serIndex:1")) return; // 0 = first series, 1 = second
-
-  mark.color = "#8f8f8f";
-  mark.radius = 2; // unconfirmed property name — see Common Mistake #7
-});
-```
-
-```javascript
-// Alternative when series come from a dimension (e.g. Version) — more readable,
-// but only works for the dimension-based case, not the two-measures case:
-this.dataMarks.forEach(mark => {
-  if (mark.semanticType !== "DATA_MARK") return;
-  if (mark.address?.Version !== "Budget") return;
-
-  mark.color = "#8f8f8f";
-});
-```
-
-```javascript
-// Alternative when series come from two measures — filter on the measure name instead:
-this.dataMarks.forEach(mark => {
-  if (mark.semanticType !== "DATA_MARK") return;
-  if (mark.address?.["graphomate.internal.measures"] !== "Cost") return;
-
-  mark.color = "#8f8f8f";
-});
-```
-
-**Sizing note:** `DATA_MARK` size cannot be set per-item via XFL (no `radius`/`r`
-property, `styles` is ignored — confirmed by property inspection, see Pattern 10). To
-change dot size, use the `customCss` config property targeting the `.gm-circle` CSS
-class instead — see Common Mistake #10. This only applies uniformly to all series, not
-per-series like `color` above.
-
----
-
-## Pattern 10: Debugging — inspect a viewItem when styling has no visible effect
-
-If a `styles` (or other property) assignment produces **no error and no visible change**,
-don't guess further — log the actual object first. `console.log` is available in XFL and
-shows up in the browser console:
-
-```javascript
-// 1. Inspect one representative item's data (key, address, rowIndex, etc.)
-this.dataMarks.slice(0, 3).forEach((m, i) => {
-  console.log(`Mark ${i}:`, "semanticType=", m.semanticType, "rowIndex=", m.rowIndex,
-    "key=", m.key, "address=", JSON.stringify(m.address));
-});
-
-// 2. Enumerate ALL own + inherited properties of one item — reveals the real
-//    writable properties when the docs are unclear or wrong:
-const mark = this.dataMarks.find(m => m.semanticType === "DATA_MARK");
-if (mark) {
-  const props = new Set();
-  let obj = mark;
-  while (obj) {
-    Object.getOwnPropertyNames(obj).forEach(p => props.add(p));
-    obj = Object.getPrototypeOf(obj);
-  }
-  console.log("DATA_MARK properties:", Array.from(props));
-}
-```
-
-Use this whenever a mutation is silently ignored — it has already uncovered that
-`rowIndex` on `DATA_MARK` is a category index, not a series index, and it's the fastest
-way to confirm whether a property like `radius` actually exists before trying more guesses.
+**Net result**: reliably centering a highlight label's text is currently unsolved. If you need
+this, the pragmatic workaround is to accept the offset, or fall back to a fixed/tuned pixel nudge
+for the specific chart layout at hand rather than a general solution. Revisit if graphomate ships
+an explicit centering property, or worth raising as a feature request.
 
 ---
 
@@ -385,37 +325,13 @@ const n = Number(this.getXflVariable("myNumber"));
 const b = this.getXflVariable("myFlag") === "true";
 ```
 
-**7. `rowIndex` on `DATA_MARK` is a category index, not a series index**
-Unlike `DATA_BAR`, where `rowIndex` identifies the series, `DATA_MARK.rowIndex` is the
-*category* index (e.g. week/period) and restarts at 0 for every series. Use `key`
-(`serIndex:{N}`) or `address` to identify the series instead — see Pattern 9.
-
-**8. `styles` may be silently ignored on Circle-based markers**
-Confirmed for `PIN_HEAD` (only `color` works, not `styles`/`outlined`); suspected but
-**not yet confirmed** for `DATA_MARK`. If a `styles` assignment produces no error but
-also no visible change, don't keep guessing CSS properties — use the debugging pattern
-(Pattern 10) to enumerate the object's real properties first.
-
-**9. `css` tag function and `IbcsColors` are not global in the sandbox**
-Despite being usable in some documentation examples, both throw `ReferenceError` in the
-live XFL sandbox. Use plain template-literal strings for `styles` and raw hex values
-instead of `IbcsColors.*`.
-
-**10. `DATA_MARK` size (line-chart dots) is not scriptable via XFL**
-Confirmed by inspecting a `DATA_MARK` instance's own + inherited properties: there is no
-`radius`/`r` property, and `styles`/`addStyles()` have no effect (no `styles` property
-exists on the object at all). Only `color` is a real, working property. For size, use the
-`customCss` config property instead, targeting the `.gm-circle` CSS class:
-
-```css
-.gm-circle {
-  width: 4px;
-  height: 4px;
-}
-```
-
-This is real browser CSS (not the Emotion/CSS-in-JS used by `styles`), configured as a
-separate `customCss` array entry in `visual.json` (`{ name, css, enabled }`), not inside
-`xflRules`. It applies uniformly to all series — there is currently no way to size dots
-per-series only. Worth flagging as a graphomate feature request if per-series sizing is
-needed.
+**7. Don't assume `rowIndex`/`columnIndex` = series/category without verifying**
+`bar.rowIndex`/`bar.columnIndex` semantics are not fixed across chart types/orientations
+— in one (vertical waterfall) context `rowIndex` was confirmed to be a *category* index,
+not a series index. Filtering `this.bars` on an assumed index (e.g. `rowIndex === 0`
+meaning "first series") can silently mix bars from different series/categories and
+produce wrong values with no error. If you need a specific series' bars, prefer
+matching against known values/addresses from `this.getData()` (which is unambiguous),
+or empirically dump `key`/`rowIndex`/`columnIndex`/`address` for all bars first
+(`this.bars.forEach(b => console.log(b.key, b.rowIndex, b.columnIndex, b.address))`)
+to confirm the mapping for that specific chart before relying on it.

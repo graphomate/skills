@@ -176,22 +176,24 @@ Returns a `Wedge` with a `headSize` property.
 
 ## Styling with `addStyles()` / `styles`
 
-Chartrix uses CSS-in-JS (Emotion) internally, but **neither the `css` tag function nor
-`IbcsColors` are actually available as globals in the live XFL sandbox**, despite being
-shown that way in some examples. Assign a plain string (template literal without a `css`
-tag) instead, and use raw hex values instead of `IbcsColors.*`:
+Chartrix uses CSS-in-JS (Emotion) internally, but **the `css` tag function is not
+reliably available globally in the XFL sandbox** — empirically confirmed to throw
+`css is not defined` in at least one chart context. Use the plain-object form instead,
+which works without relying on the tag function being in scope:
 
 ```javascript
-// CONFIRMED WORKING — plain string, no css tag:
-bar.styles = `fill: #ff0000;`;
+// Reliable - plain object form:
+bar.styles = { name: "xfl", styles: "fill: red;" };
 
-// Or use addStyles() to merge with existing styles:
-bar.addStyles(`fill: #ff0000; opacity: 0.5;`);
+// If `css` happens to be available in your context, this also works - but don't
+// depend on it:
+// bar.styles = css`fill: red;`;
 ```
 
-`ReferenceError: css is not defined` / `ReferenceError: IbcsColors is not defined` in the
-console confirm this — if you see either, drop the `css` tag and swap `IbcsColors.X` for
-its raw hex value (see the table at the end of this file).
+`addStyles()` for merging with existing styles:
+```javascript
+bar.addStyles({ name: "xfl", styles: "fill: red; opacity: 0.5;" });
+```
 
 Common CSS properties for ViewItems:
 - `fill` — fill color of bars/shapes
@@ -201,42 +203,6 @@ Common CSS properties for ViewItems:
 - `font-size` — for labels
 - `font-weight` — for labels
 - `color` — text color for Label (alternatively use `label.color`)
-
-**Known limitation — `styles` silently ignored on some Circle-based markers:**
-On `PIN_HEAD`, `styles` and `outlined` have no effect at all — only the `color` property
-works (see Common Mistake #5 in `patterns.md`). `DATA_MARK` (line-chart dots) may share
-this behavior. If assigning `mark.styles = \`fill: ...; r: 2px;\`` produces no error but
-also no visible change, try direct properties instead:
-
-```javascript
-mark.color = "#8f8f8f";
-mark.radius = 2;   // try `radius`; if that has no effect either, inspect the object
-                    // directly (see debugging pattern in patterns.md) to find the
-                    // correct property name — it has not been confirmed for DATA_MARK yet.
-```
-
-This is unconfirmed for `DATA_MARK` specifically — treat it as the first thing to try,
-not a guaranteed fix. If you find the working property, update this note.
-
-**Confirmed: `DATA_MARK` size is not scriptable via XFL at all.** `color` works directly
-as a property; `styles`/`addStyles()` are silently ignored (no `styles` property exists
-on the object — `Object.getOwnPropertyNames` inspection confirmed this); there is no
-`radius`/`r` property either. For size, use the `customCss` config property instead
-(real browser CSS, not Emotion/CSS-in-JS — a separate mechanism from `styles`/XFL). The
-rendered dots have the CSS class `.gm-circle`, sized via `width`/`height` (not `r`):
-
-```css
-/* customCss entry — affects ALL dots (all series), not scriptable per-series */
-.gm-circle {
-  width: 4px;
-  height: 4px;
-}
-```
-
-`customCss` is a top-level `visual.json` property (array of `{ name, css, enabled }`),
-separate from `xflRules` — it's the general escape hatch for anything the XFL element API
-doesn't expose a property for, per its own description: "a perfect counterpart to the XFL
-when highly complex selectors are needed."
 
 ---
 
