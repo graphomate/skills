@@ -20,7 +20,7 @@ This skill helps configure the **graphomate chartrix** custom visual inside Powe
 >
 > **Ergänzender Skill**
 > Für **dynamische, datengetriebene Formatierung** zur Laufzeit (z.B. Balken nach Wert färben,
-> Highlights automatisch positionieren, Labels ersetzen) → **chartrix-xfl Skill** nutzen.
+> Highlights automatisch positionieren, Labels ersetzen) → **writing-chartrix-xfl Skill** nutzen.
 > Die Grenze: alles was von den tatsächlichen Datenwerten abhängt, gehört in XFL.
 
 ---

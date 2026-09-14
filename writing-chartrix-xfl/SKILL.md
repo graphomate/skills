@@ -25,7 +25,7 @@ items (visual elements like bars, labels, lines) or creates new ones.
 > **Ergänzender Skill**
 > XFL greift auf Elemente zu, die durch die chartrix-Config erzeugt werden.
 > Für statische Grundkonfiguration (Szenarien, Chart-Typen, Highlights, Separatoren)
-> → **graphomate-chartrix Skill** nutzen. Übersicht Config → Element → SemanticType
+> → **configuring-chartrix-pbip Skill** nutzen. Übersicht Config → Element → SemanticType
 > → `references/elements.md`
 
 ---

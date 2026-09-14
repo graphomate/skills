@@ -205,12 +205,12 @@ cell.appendStyle("root", { backgroundColor: "#c6efce", color: "#276221" });
 
 ## Scope separation
 
-| Task | Tool |
-|---|---|
-| Color/format cells at runtime | **CFL (this skill)** |
-| Configure scenarios, deviations, number formats | **matrix config skill** |
-| Bar charts, sparklines, pin charts in cells | **matrix config skill** |
-| Global CSS overrides | `customCss` property (matrix config skill) |
+| Task | Tool                                       |
+|---|--------------------------------------------|
+| Color/format cells at runtime | **CFL (this skill)**                       |
+| Configure scenarios, deviations, number formats | **configuring-matrix-pbip skill**          |
+| Bar charts, sparklines, pin charts in cells | **configuring-matrix-pbip skill**                    |
+| Global CSS overrides | `customCss` property (configuring-matrix-pbip skill) |
 
 ---
 

@@ -4,9 +4,6 @@ Jedes chartrix-Chart besteht aus einer Menge von **visuellen Elementen**, die
 zur Konfigurationszeit (Config-Properties in `visual.json`) statisch gesteuert
 und zur Laufzeit via **XFL** dynamisch überschrieben werden können.
 
-Diese Datei beschreibt Elemente aus der **Config-Perspektive**.
-Für XFL-seitige Laufzeit-Adressierung → `chartrix-xfl/references/semantic-types.md`
-
 ---
 
 ## Brückentabelle: Config → Element → XFL

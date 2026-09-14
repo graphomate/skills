@@ -368,7 +368,7 @@ Formula-based members using measure references with `${...}` syntax.
 ## CFL Scripting
 
 `cflRules` and `cflVariables` live in the **`Labels`** group.
-For writing scripts → use the **matrix-cfl skill**.
+For writing scripts → use the **writing-matrix-cfl skill**.
 
 Config-level setup:
 ```json
@@ -411,4 +411,4 @@ Save → switch to Power BI Desktop → click **Reload** when prompted.
 - Say "the table" or "the matrix", not "the visual".
 - Avoid saying `addressSubset` — say "which columns/rows this applies to".
 - Confirm the exact Power BI **table name** and **measure name** (DAX expression) before writing config.
-- For CFL scripting requests → use the **matrix-cfl skill**.
+- For CFL scripting requests → use the **writing-matrix-cfl skill**.
