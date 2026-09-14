@@ -1,5 +1,5 @@
 ---
-name: graphomate-matrix
+name: configuring-matrix-pbip
 description: >
   Use this skill whenever a user wants to configure, modify, or build a Power BI report
   using the graphomate matrix visual. Triggers include: any mention of "matrix", "graphomate matrix",
