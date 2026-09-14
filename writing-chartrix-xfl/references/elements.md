@@ -5,7 +5,7 @@ zur Konfigurationszeit (Config-Properties in `visual.json`) statisch gesteuert
 und zur Laufzeit via **XFL** dynamisch überschrieben werden können.
 
 Diese Datei beschreibt Elemente aus der **Config-Perspektive**.
-Für XFL-seitige Laufzeit-Adressierung → `chartrix-xfl/references/semantic-types.md`
+Für XFL-seitige Laufzeit-Adressierung → `references/semantic-types.md`
 
 ---
 
