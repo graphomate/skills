@@ -1,5 +1,5 @@
 ---
-name: matrix-cfl
+name: writing-matrix-cfl
 description: >
   Use this skill whenever a user wants to write, debug, or understand CFL scripts for the
   graphomate matrix visual. CFL (Cell Formatting Language) is a JavaScript-based scripting

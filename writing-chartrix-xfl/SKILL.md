@@ -1,5 +1,5 @@
 ---
-name: chartrix-xfl
+name: writing-chartrix-xfl
 description: >
   Use this skill whenever a user wants to write, debug, or understand XFL scripts for the
   graphomate chartrix visual. XFL is a JavaScript-based scripting dialect that allows
