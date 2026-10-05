@@ -139,20 +139,20 @@ Auto-calculates variance members. No DAX needed.
 
 ## addressSubset – Filtering Reference
 
-`addressSubset` appears in many properties to restrict which data points are affected. It is an object where keys are dimension names and values are member keys.
+`addressSubset` appears in many properties to restrict which data points are affected. It is an object where keys are dimension names and values are **arrays of member key strings** — always an array, even for a single member.
 
 ```json
 // Apply to ALL data
 "addressSubset": {}
 
 // Apply only to "Actual" measure
-"addressSubset": { "Measures": "Actual" }
+"addressSubset": { "Measures": ["Actual"] }
 
 // Apply to a specific category
-"addressSubset": { "Month": "Jan" }
+"addressSubset": { "Month": ["Jan"] }
 
 // Apply to a combination
-"addressSubset": { "Measures": "Actual", "Region": "North" }
+"addressSubset": { "Measures": ["Actual"], "Region": ["North"] }
 ```
 
 Use `addressSubset` to assign different scenarios, formats, or styles to different parts of the same dataset.
