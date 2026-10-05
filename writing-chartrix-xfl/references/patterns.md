@@ -324,14 +324,3 @@ All variable values are strings. Always convert explicitly:
 const n = Number(this.getXflVariable("myNumber"));
 const b = this.getXflVariable("myFlag") === "true";
 ```
-
-**7. Don't assume `rowIndex`/`columnIndex` = series/category without verifying**
-`bar.rowIndex`/`bar.columnIndex` semantics are not fixed across chart types/orientations
-— in one (vertical waterfall) context `rowIndex` was confirmed to be a *category* index,
-not a series index. Filtering `this.bars` on an assumed index (e.g. `rowIndex === 0`
-meaning "first series") can silently mix bars from different series/categories and
-produce wrong values with no error. If you need a specific series' bars, prefer
-matching against known values/addresses from `this.getData()` (which is unambiguous),
-or empirically dump `key`/`rowIndex`/`columnIndex`/`address` for all bars first
-(`this.bars.forEach(b => console.log(b.key, b.rowIndex, b.columnIndex, b.address))`)
-to confirm the mapping for that specific chart before relying on it.
