@@ -13,14 +13,9 @@ description: >
 
 This skill helps configure the **graphomate chartrix** custom visual inside Power BI Project (`.pbip`) files so that financial analysts can create clear, IBCS-compliant charts without needing BI experts.
 
-> **Referenzen in diesem Skill**
-> - Visuelle Elemente, Config-Properties und wann XFL nötig ist → `references/elements.md`
-> - Alle konfigurierbaren Properties → `references/properties.md`
->
-> **Ergänzender Skill**
-> Für **dynamische, datengetriebene Formatierung** zur Laufzeit (z.B. Balken nach Wert färben,
-> Highlights automatisch positionieren, Labels ersetzen) → **writing-chartrix-xfl Skill** nutzen.
-> Die Grenze: alles was von den tatsächlichen Datenwerten abhängt, gehört in XFL.
+> **References in this skill**
+> - Visual elements, config properties, and when XFL is needed → `references/elements.md`
+> - All configurable properties → `references/properties.md`
 
 ## When not to use this skill
 

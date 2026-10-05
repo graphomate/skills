@@ -291,15 +291,15 @@ HIGHLIGHT_* viewItems only exist if a `highlights` config entry is present in
 `visual.json`. A placeholder entry with any two addresses is sufficient — the XFL
 script overrides positions at runtime.
 
-**4. `styles` und `rowIndex` auf PIN_HEAD**
-`PIN_HEAD` (Kreis-Marker im Pin Chart) ignoriert `styles` und `outlined` vollständig.
-Nur `color` hat Wirkung. Außerdem ist `rowIndex` nicht gesetzt — Serienerkennung
-immer über `address`:
+**4. `styles` and `rowIndex` on PIN_HEAD**
+`PIN_HEAD` (the circle marker in a pin chart) ignores `styles` and `outlined` completely.
+Only `color` has an effect. In addition, `rowIndex` is not set — always identify the
+series via `address`:
 ```javascript
 this.viewModel.forEach(item => {
   if (item.semanticType !== "PIN_HEAD") return;
   const version = item.address ? Object.values(item.address).join("|") : "";
-  if (version.includes("FC")) item.color = "white"; // hollow-Simulation
+  if (version.includes("FC")) item.color = "white"; // simulates a hollow marker
 });
 ```
 

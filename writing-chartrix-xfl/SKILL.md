@@ -18,16 +18,11 @@ items (visual elements like bars, labels, lines) or creates new ones.
 > **Full API reference**: see `references/api.md`
 > **SemanticType catalogue**: see `references/semantic-types.md`
 > **Code patterns & examples**: see `references/patterns.md`
->
-> **Ergänzender Skill**
-> XFL greift auf Elemente zu, die durch die chartrix-Config erzeugt werden.
-> Für statische Grundkonfiguration (Szenarien, Chart-Typen, Highlights, Separatoren)
-> → **configuring-chartrix-pbip Skill** nutzen. Übersicht Config → Element → SemanticType
-> → `references/elements.md`
+> **Config → Element → SemanticType overview**: see `references/elements.md`
 
 ## When not to use this skill
 
-- **Static chart setup** (scenarios, chart types, fixed highlights between named members, separators, value formats) → use the **configuring-chartrix-pbip** skill.
+- **Static chart setup** (scenarios, chart types, fixed highlights between named members, separators, value formats) → use the **configuring-chartrix-pbip** skill. XFL only acts on elements that the chartrix config creates.
 - **Scripts for the graphomate matrix** (`cell.…` API, `cflRules`) → use the **writing-matrix-cfl** skill.
 
 ---
