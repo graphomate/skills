@@ -71,7 +71,7 @@ this.bars.forEach(bar => {
   const r = bar.rowIndex;
   const c = bar.columnIndex;
   if (r !== undefined && c !== undefined && extremas[r]?.[c]?.isLocalMax) {
-    bar.styles = css`fill: #0070c0;`;  // blue highlight
+    bar.styles = { name: "xfl", styles: "fill: #0070c0;" };  // blue highlight
   }
 });
 ```

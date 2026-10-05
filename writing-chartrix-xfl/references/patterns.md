@@ -88,9 +88,9 @@ this.bars.forEach(bar => {
   if (!dp) return;
 
   if (dp.value > 0) {
-    bar.styles = css`fill: ${IbcsColors.GREEN};`;
+    bar.styles = { name: "xfl", styles: `fill: ${IbcsColors.GREEN};` };
   } else {
-    bar.styles = css`fill: ${IbcsColors.RED};`;
+    bar.styles = { name: "xfl", styles: `fill: ${IbcsColors.RED};` };
   }
 });
 ```
@@ -111,7 +111,7 @@ this.bars.forEach(bar => {
   if (r === undefined || c === undefined) return;
 
   if (extremas[r]?.[c]?.isLocalMax) {
-    bar.styles = css`fill: ${IbcsColors.BLUE};`;
+    bar.styles = { name: "xfl", styles: `fill: ${IbcsColors.BLUE};` };
   }
 });
 ```
@@ -155,7 +155,7 @@ Color only the "Budget" bars differently:
 const isBudget = this.createFilterByAddress({ "Datenquelle.Version": ["Budget"] });
 
 this.bars.filter(isBudget).forEach(bar => {
-  bar.styles = css`fill: transparent; stroke: ${IbcsColors.DARK_GREY}; stroke-width: 2px;`;
+  bar.styles = { name: "xfl", styles: `fill: transparent; stroke: ${IbcsColors.DARK_GREY}; stroke-width: 2px;` };
 });
 ```
 
@@ -171,7 +171,7 @@ this.bars.forEach(bar => {
   if (bar.semanticType !== "DATA_BAR") return;
   const value = bar.dataPoint?.cellRepresentingDataPoint?.value;
   if (value !== undefined && value > threshold) {
-    bar.addStyles(css`fill: ${IbcsColors.BLUE};`);
+    bar.addStyles({ name: "xfl", styles: `fill: ${IbcsColors.BLUE};` });
   }
 });
 ```

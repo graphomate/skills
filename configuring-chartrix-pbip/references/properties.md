@@ -123,7 +123,7 @@ Auto-calculates variance members. No DAX needed.
 ## Category: Emphasis
 
 - **backgroundColor** (string): chart background color, default `#FFFFFF`
-- **highlights**: conditional highlighting rules (XFL-based)
+- **highlights**: conditional highlighting rules
 - **separators**: visual separator lines between data groups
 
 ---

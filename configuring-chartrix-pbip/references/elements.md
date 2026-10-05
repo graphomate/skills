@@ -31,7 +31,7 @@ und zur Laufzeit via **XFL** dynamisch überschrieben werden können.
 ### Datendarstellung
 
 **Balken (`DATA_BAR`)** — Hauptelement aller Bar/Column Charts.
-- Farbe: über `scenarios[].color` oder XFL `bar.styles = css\`fill: ...\``
+- Farbe: über `scenarios[].color` oder XFL `bar.styles = { name: "xfl", styles: "fill: ..." }`
 - Typ: über `charts[].type` (`BAR`, `COLUMN`, `WATERFALL`, `PIN`, ...)
 - Szenarien steuern die Grundfärbung; XFL kann pro Datenpunkt überschreiben.
 
