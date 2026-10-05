@@ -269,29 +269,14 @@ an explicit centering property, or worth raising as a feature request.
 
 ## Common mistakes to avoid
 
-**1. Iterating `getData().data` cells**
-`CartesianDataRow` is array-like but not a plain array. Use a numeric index loop or
-`Array.from()` — don't assume `.length` works reliably with `for...of`.
-
-```javascript
-// Safe iteration over cells in series 0:
-const series = this.getData().data[0];
-let i = 0;
-while (series[i] !== undefined) {
-  const dp = series[i].cellRepresentingDataPoint;
-  // ...
-  i++;
-}
-```
-
-**2. Missing null checks on `dataPoint`**
+**1. Missing null checks on `dataPoint`**
 Not every `ViewItem` has a `dataPoint`. Always check before accessing `.value`:
 ```javascript
 const value = bar.dataPoint?.cellRepresentingDataPoint?.value;
 if (value === undefined) return;
 ```
 
-**3. Forgetting `rowIndex`/`columnIndex` checks**
+**2. Forgetting `rowIndex`/`columnIndex` checks**
 Bars from different series share the same `semanticType`. Filter by `rowIndex` to
 target a specific series:
 ```javascript
@@ -301,12 +286,12 @@ this.bars.forEach(bar => {
 });
 ```
 
-**4. Highlight manipulation without a highlights config entry**
+**3. Highlight manipulation without a highlights config entry**
 HIGHLIGHT_* viewItems only exist if a `highlights` config entry is present in
 `visual.json`. A placeholder entry with any two addresses is sufficient — the XFL
 script overrides positions at runtime.
 
-**5. `styles` und `rowIndex` auf PIN_HEAD**
+**4. `styles` und `rowIndex` auf PIN_HEAD**
 `PIN_HEAD` (Kreis-Marker im Pin Chart) ignoriert `styles` und `outlined` vollständig.
 Nur `color` hat Wirkung. Außerdem ist `rowIndex` nicht gesetzt — Serienerkennung
 immer über `address`:
@@ -318,7 +303,7 @@ this.viewModel.forEach(item => {
 });
 ```
 
-**6. `getXflVariable` returns string**
+**5. `getXflVariable` returns string**
 All variable values are strings. Always convert explicitly:
 ```javascript
 const n = Number(this.getXflVariable("myNumber"));
