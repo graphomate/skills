@@ -151,10 +151,10 @@ Each value is a stringified JSON array or primitive wrapped in single quotes:
 {
   "timestamp": 1,
   "datatypes": [
-    { "short": "AC", "color": "#222222", "filltype": "filled", "shape": "rect", "patterntype": "solid" },
+    { "short": "AC", "color": "#404040", "filltype": "filled", "shape": "rect", "patterntype": "solid" },
     { "short": "BU", "color": "#222222", "filltype": "empty",  "shape": "rect", "patterntype": "solid" },
     { "short": "FC", "color": "#222222", "filltype": "empty",  "shape": "rect", "patterntype": "dashed" },
-    { "short": "PY", "color": "#999999", "filltype": "filled", "shape": "rect", "patterntype": "solid" }
+    { "short": "PY", "color": "#a6a6a6", "filltype": "filled", "shape": "rect", "patterntype": "solid" }
   ]
 }
 ```
