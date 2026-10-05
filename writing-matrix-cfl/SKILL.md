@@ -1,17 +1,12 @@
 ---
 name: writing-matrix-cfl
 description: >
-  Use this skill whenever a user wants to write, debug, or understand CFL scripts for the
-  graphomate matrix visual. CFL (Cell Formatting Language) is a JavaScript-based scripting
-  dialect that runs per-cell at render time, enabling conditional formatting, dynamic colors,
-  custom text, icons, and data-driven styling. Use this skill for any request involving
-  coloring cells by value, bolding rows dynamically, showing traffic lights, setting background
-  colors based on thresholds, adding custom formatted values, changing scenarios at runtime,
-  hiding rows or columns, or any scripted customization of a matrix cell. Triggers include:
-  "CFL", "cfl script", "cflRules", "color cells dynamically", "conditional formatting",
-  "highlight rows", "traffic light", "bold if negative", "cell color", "hide row", "hide column",
-  "heatmap", "scripting in matrix", or whenever the user pastes or asks about a script for
-  the matrix. Always use this skill before writing or modifying any matrix scripting code.
+  Use when writing, debugging, or explaining CFL scripts for the graphomate matrix visual —
+  coloring cells by value, traffic lights, heatmaps, bold rows, hiding rows or columns.
+  Triggers: "CFL", "cflRules", "scripting in matrix", or a snippet using cell.getValue() or
+  cell.appendStyle(). Use before writing or changing any matrix script. Not for static matrix
+  configuration (use configuring-matrix-pbip), chartrix scripts (use writing-chartrix-xfl),
+  or native Power BI conditional formatting.
 ---
 
 # graphomate matrix – CFL Scripting Skill
@@ -211,6 +206,8 @@ cell.appendStyle("root", { backgroundColor: "#c6efce", color: "#276221" });
 | Configure scenarios, deviations, number formats | **configuring-matrix-pbip skill**          |
 | Bar charts, sparklines, pin charts in cells | **configuring-matrix-pbip skill**                    |
 | Global CSS overrides | `customCss` property (configuring-matrix-pbip skill) |
+| Scripts for graphomate chartrix (`this.viewModel`, `xflRules`) | **writing-chartrix-xfl skill** |
+| Native Power BI conditional formatting (no graphomate matrix) | Not covered by this skill |
 
 ---
 

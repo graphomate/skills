@@ -1,13 +1,12 @@
 ---
 name: configuring-chartrix-pbip
 description: >
-  Use this skill whenever a user wants to configure, modify, or build a Power BI report
-  using the graphomate chartrix visual. Triggers include: any mention of "chartrix",
-  "graphomate", "Power BI report", ".pbip", "IBCS chart", "financial chart", "variance chart",
-  "waterfall chart in Power BI", or requests to help visualize financial data (P&L, budget vs actual,
-  forecast, revenue, cost). Also trigger when the user wants to set up scenarios (AC, PY, BU, FC),
-  configure deviations, or make their charts IBCS-compliant. If the user uploads a visual.json or
-  .pbip file and asks for help with charts or visuals, always use this skill.
+  Use when configuring the graphomate chartrix chart visual in a Power BI project
+  (.pbip / visual.json) — chart types, scenarios (AC, PY, BU, FC), deviations, variance or
+  waterfall charts, static highlights, value formats, IBCS-compliant charts. Triggers: "chartrix",
+  "IBCS chart", a visual.json with visualType "graphomatechartrix". Not for the graphomate matrix
+  table (use configuring-matrix-pbip), data-driven runtime formatting (use writing-chartrix-xfl),
+  or native Power BI visuals.
 ---
 
 # graphomate chartrix – Power BI Skill
@@ -22,6 +21,12 @@ This skill helps configure the **graphomate chartrix** custom visual inside Powe
 > Für **dynamische, datengetriebene Formatierung** zur Laufzeit (z.B. Balken nach Wert färben,
 > Highlights automatisch positionieren, Labels ersetzen) → **writing-chartrix-xfl Skill** nutzen.
 > Die Grenze: alles was von den tatsächlichen Datenwerten abhängt, gehört in XFL.
+
+## When not to use this skill
+
+- **graphomate matrix table visual** → use the **configuring-matrix-pbip** skill.
+- **Formatting that depends on the actual data values at runtime** (color bars by value, auto-position highlights, replace labels) → use the **writing-chartrix-xfl** skill.
+- **Native Power BI visuals or general `.pbip` / report questions** without graphomate chartrix → this skill does not apply.
 
 ---
 

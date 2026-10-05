@@ -1,15 +1,12 @@
 ---
 name: writing-chartrix-xfl
 description: >
-  Use this skill whenever a user wants to write, debug, or understand XFL scripts for the
-  graphomate chartrix visual. XFL is a JavaScript-based scripting dialect that allows
-  runtime manipulation of the chartrix viewModel — use this skill for any request involving
-  dynamic highlighting, conditional bar coloring, custom labels, data-driven annotations,
-  or any scripted customization of a chartrix chart. Triggers include: "XFL", "xfl script",
-  "xflRules", "highlight the max/min", "color bars dynamically", "add a label to", "manipulate
-  the viewmodel", "auto highlight", "scripting in chartrix", or whenever the user pastes or asks
-  about a `this.viewModel.forEach` / `this.getData()` snippet. Always use this skill before
-  writing or modifying any chartrix scripting code, even if the request seems straightforward.
+  Use when writing, debugging, or explaining XFL scripts for the graphomate chartrix visual —
+  data-driven highlights (auto-highlight max/min), coloring bars by value, adding or replacing
+  labels, runtime annotations. Triggers: "XFL", "xflRules", "scripting in chartrix", or a snippet
+  using this.viewModel or this.getData(). Use before writing or changing any chartrix script.
+  Not for static chart configuration (use configuring-chartrix-pbip) or graphomate matrix
+  scripts (use writing-matrix-cfl).
 ---
 
 # graphomate chartrix – XFL Scripting Skill
@@ -27,6 +24,11 @@ items (visual elements like bars, labels, lines) or creates new ones.
 > Für statische Grundkonfiguration (Szenarien, Chart-Typen, Highlights, Separatoren)
 > → **configuring-chartrix-pbip Skill** nutzen. Übersicht Config → Element → SemanticType
 > → `references/elements.md`
+
+## When not to use this skill
+
+- **Static chart setup** (scenarios, chart types, fixed highlights between named members, separators, value formats) → use the **configuring-chartrix-pbip** skill.
+- **Scripts for the graphomate matrix** (`cell.…` API, `cflRules`) → use the **writing-matrix-cfl** skill.
 
 ---
 

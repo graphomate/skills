@@ -1,14 +1,12 @@
 ---
 name: configuring-matrix-pbip
 description: >
-  Use this skill whenever a user wants to configure, modify, or build a Power BI report
-  using the graphomate matrix visual. Triggers include: any mention of "matrix", "graphomate matrix",
-  "gm matrix", "Power BI table", ".pbip", "IBCS table", "financial table", "P&L table",
-  "variance table", or requests to help display financial data in tabular form (P&L, budget vs actual,
-  forecast, revenue, cost breakdowns). Also trigger when the user wants to set up scenarios
-  (AC, PY, BU, FC) in a table, configure deviation columns, number formats, bar charts in cells,
-  sparklines, or hierarchy display. If the user uploads a visual.json or .pbip file and asks for
-  help with a table visual, always use this skill.
+  Use when configuring the graphomate matrix table visual in a Power BI project
+  (.pbip / visual.json) — scenarios (AC, PY, BU, FC) in a table, deviation columns, number formats,
+  in-cell bar charts, sparklines, hierarchy display. Triggers: "graphomate matrix", "gm matrix",
+  "IBCS table", a visual.json whose visualType contains "graphomate" and "matrix". Not for
+  Power BI's built-in Matrix visual, chartrix charts (use configuring-chartrix-pbip), or per-cell
+  scripts (use writing-matrix-cfl).
 ---
 
 # graphomate matrix – Power BI Skill
@@ -16,6 +14,12 @@ description: >
 This skill helps configure the **graphomate matrix** custom visual inside Power BI Project (`.pbip`)
 files. The matrix is a table component supporting IBCS-compliant financial reporting with
 scenarios, deviation columns, in-cell visualizations, and CFL scripting.
+
+## When not to use this skill
+
+- **graphomate chartrix chart visual** → use the **configuring-chartrix-pbip** skill.
+- **Per-cell scripts (CFL)** — color cells by value, traffic lights, hide rows or columns → use the **writing-matrix-cfl** skill.
+- **Power BI's built-in Matrix or Table visual, or general `.pbip` questions** without graphomate matrix → this skill does not apply.
 
 ---
 
